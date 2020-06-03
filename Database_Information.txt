@@ -1,0 +1,5 @@
+Host name: postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com
+DB name: shoppingWebDatabase
+Port: 5432
+Master username: JinZhi123
+Master password: QWER123456789
