@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>home</title>
-    </head>
-    {% for champs in all %}
-    <body>
-        <h1>{{champs.name}} {{champs.role}} {{champs.price}}</h1>
-        <img src= "{{champs.picture.url}}">
-    </body>
-    
-{% endfor %}
-</html>
+{% extends 'design/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        {% for champs in all %}
+        <div class="col-lg-4">
+            <img class ="thumbnail" src="{{champs.picture.url}}">
+            <div class="box-element product">
+                <h6>{{champs.name}}</h6>
+                <h6>{{champs.role}}</h6>
+                <hr>
+                <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+                <h4 style="display: inline-block;float: right">${{champs.price}}</h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
