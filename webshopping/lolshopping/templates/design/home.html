@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>home</title>
-</head>
-{% for champs in all %}
-<body>
-    <h1>{{champs.name}} {{champs.role}} {{champs.price}}</h1>
-    <img src= "{{champs.picture.url}}">
-</body>
+    <head>
+        <title>home</title>
+    </head>
+    {% for champs in all %}
+    <body>
+        <h1>{{champs.name}} {{champs.role}} {{champs.price}}</h1>
+        <img src= "{{champs.picture.url}}">
+    </body>
+    
 {% endfor %}
 </html>
