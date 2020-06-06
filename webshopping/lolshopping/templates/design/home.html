@@ -1,6 +1,14 @@
 {% extends 'design/main.html' %}
 {% load static %}
 {% block content %}
+
+
+<form method ="get">
+    {{myFilter.form}}
+    <input type="submit" />
+</form>
+
+
     <div class="row">
         {% for champs in all %}
         <div class="col-lg-4">
