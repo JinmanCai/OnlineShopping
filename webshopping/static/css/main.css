@@ -9,14 +9,30 @@ h1,h2,h3,h4,h5,h6{
 .box-element{
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
+	width: 250px;
+	height: 140px;
+	padding: 10px;
+	justify-content: center;
+	align-items: center;
+}
+
+.box-element-cart{
+	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
 	border-radius: 4px;
 	padding: 10px;
+}
 
+.box-element-checkout{
+	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;
 }
 
 .thumbnail{
-	padding-left:50px;
-	width: 300px;
+	box-shadow:hsl(0, 0%, 80%) 7px 0px 16px;
+	width: 250px;
 	height: 282px;
 	/*-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
     -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);*/
