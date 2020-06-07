@@ -2,16 +2,16 @@
 {% load static %}
 {% block content %}
 
-
-<form method ="get">
-    {{myFilter.form}}
-    <input type="submit" />
-</form>
-
+<div class="filt">
+    <form method ="get">
+        {{myFilter.form}}
+        <input type="submit" Value = "Search">
+    </form>
+</div>
 
     <div class="row">
         {% for champs in all %}
-        <div class="col-lg-4">
+        <div class="col-lg-4 abc">
             <img class ="thumbnail" src="{{champs.picture.url}}">
             <div class="box-element product">
                 <h6>{{champs.name}}</h6>
@@ -19,6 +19,7 @@
                 <hr>
                 <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
                 <h4 style="display: inline-block;float: right">${{champs.price}}</h4>
+
             </div>
         </div>
         {% endfor %}
