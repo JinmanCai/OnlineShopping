@@ -11,14 +11,14 @@
 
     <div class="row">
         {% for champs in all %}
-        <div class="col-lg-4 abc">
+        <div class="col-lg-3 abc">
             <img class ="thumbnail" src="{{champs.picture.url}}">
             <div class="box-element product">
                 <h6>{{champs.name}}</h6>
                 <h6>{{champs.role}}</h6>
                 <hr>
                 <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
-                <h4 style="display: inline-block;float: right">${{champs.price}}</h4>
+                <h4 style="float: right">${{champs.price}}</h4>
 
             </div>
         </div>
