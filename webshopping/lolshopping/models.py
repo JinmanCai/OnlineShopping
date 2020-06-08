@@ -10,4 +10,8 @@ class Champions(models.Model):
     def __str__(self):
         return self.name
 
+# class Users(models.Model):
+#     name = models.CharField(max_length=30)
+
+
 
