@@ -8,7 +8,7 @@
 
         <div class="col-lg-6">
             <div class="box-element-checkout" id="form-wrapper">
-				<form id="form">
+				<form id="form" action = "{% url 'confirmation' %}" method = "get">
                  <!-- action = "{% url 'confirmation' %}" method = "get"> -->
 
 					<div id="user-info">
@@ -155,7 +155,7 @@
             .then(response => response.json())
             .then((data)=>{
                 console.log("hello world")
-                window.location.href = "{% url 'confirmation' %}"
+                // window.location.href = "{% url 'confirmation' %}"
             })
 
 
