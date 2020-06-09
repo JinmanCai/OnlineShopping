@@ -59,7 +59,14 @@
                         <p><h4>Enter Payment Method:</h4></p>
 
                         <div class="form-field-for-payment">
-							<input required class="form-control" type="text" name="card_type" placeholder="Debit or Credit">
+                            <!-- <input required class="form-control" type="text" name="card_type" placeholder="Debit or Credit"> -->
+                            
+                            <select required class="form-control" name="card_type">
+                                <option value="" disabled selected>Debit or Credit</option>
+                                <option value="Debit">Debit</option>
+                                <option value="Credit">Credit</option>
+                            </select>
+
                         </div>
                     
                         <div class="form-field-for-payment">
@@ -71,13 +78,29 @@
                         </div>
                         
 						<div class="form-field-for-payment">
-							<input required class="form-control" type="text" name="expiration_date" placeholder="Expiration date (Ex: 06/28)">
+							<input required class="form-control" type="text" name="expiration_date" placeholder="Expiration date (Ex: 0628)" maxlength="4">
                         </div>
                         
 						<div class="form-field-for-payment">
-							<input required class="form-control" type="text" name="cvc_number" placeholder="The 3-digit security code">
+							<input required class="form-control" type="text" name="cvc_number" placeholder="The 3-digit security code" maxlength="3">
                         </div>
 
+                    </div>
+                    
+                    <div id="delivery-info">
+                        
+                        <p><h4>Select Delivery Option:</h4></p>
+
+                        <div class="form-field-for-payment">
+                            
+                            <select required class="form-control" name="delivery_option">
+                                <option value="" disabled selected></option>
+                                <option value="one_week_delivery">One week delivery</option>
+                                <option value="two_week_delivery">Two week delivery</option>
+                            </select>
+
+                        </div>
+                
 					</div>
 
                     <hr>
