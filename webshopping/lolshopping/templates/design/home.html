@@ -19,7 +19,7 @@
                 vertical-align: top;
                 -ms-box-sizing:content-box;
                 -moz-box-sizing:content-box;
-                -webkit-box-sizing:content-box; 
+                -webkit-box-sizing:content-box;
                 box-sizing:content-box;
             }
         </style>
@@ -27,7 +27,7 @@
         <label for="id_role">
             <b>Role:</b> &thinsp;
             <!-- <input list="id_role" name="role"> -->
-        </label> 
+        </label>
         <select name="role" id="id_role">
             <option value="" selected></option>
             <option value="Top">Top</option>
@@ -40,7 +40,7 @@
 
         <label for="id_price">
             <b>Price:</b> &thinsp;
-        </label> 
+        </label>
         <select name="price" id="id_price">
             <option value="" selected></option>
             <option value="5">5</option>
@@ -54,7 +54,7 @@
         <!-- <label for="id_price"><b>Price:</b></label>&thinsp;&thinsp;&thinsp;<input type="number" name="price" step="any" id="id_price">&ensp; -->
 
         &ensp;&ensp;<input type="submit" value="Search">
-        
+
     </form>
     <br>
 </div>
@@ -62,12 +62,12 @@
     <div class="row">
         {% for champs in all %}
         <div class="col-lg-3 abc">
-            <img class ="thumbnail" src="{{champs.picture.url}}">
+            <img class ="thumbnail" src="{{champs.imageURL}}">
             <div class="box-element product">
                 <h6>{{champs.name}}</h6>
                 <h6>{{champs.role}}</h6>
                 <hr>
-                <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+                <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                 <h4 style="float: right">${{champs.price}}</h4>
 
             </div>
