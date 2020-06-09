@@ -82,15 +82,15 @@
 
                     <hr>
                     
-                    <!-- <input id="form-button" class="btn btn-success btn-block" type="submit" value="Place your order" onclick="myFunction()"> -->
+                    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Place your order" onclick="myFunction()">
 
-                    <button class="btn btn-success btn-block" type="submit" form="form" onclick="myFunction()">
+                    <!-- <button class="btn btn-success btn-block" type="submit" form="form" onclick="myFunction()">
                         Place your order
-                    </button>
+                    </button> -->
 
                     <script>
                         function myFunction() {
-                          alert("Thank You! You submitted your order!");
+                            location.href = "{% url 'confirmation' %}";
                         }
                     </script>
                     
