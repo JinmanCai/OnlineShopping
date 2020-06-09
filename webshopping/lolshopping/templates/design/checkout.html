@@ -59,7 +59,14 @@
                         <p><h4>Enter Payment Method:</h4></p>
 
                         <div class="form-field-for-payment">
-							<input required class="form-control" type="text" name="card_type" placeholder="Debit or Credit">
+                            <!-- <input required class="form-control" type="text" name="card_type" placeholder="Debit or Credit"> -->
+                            
+                            <select required class="form-control" name="card_type">
+                                <option value="" disabled selected>Debit or Credit</option>
+                                <option value="Debit">Debit</option>
+                                <option value="Credit">Credit</option>
+                            </select>
+
                         </div>
                     
                         <div class="form-field-for-payment">
