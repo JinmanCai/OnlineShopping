@@ -23,3 +23,6 @@ def checkout(request):
     context = {}
     return render(request, 'design/checkout.html', context)
 
+def confirmation(request):
+    context = {}
+    return render(request, 'design/confirmation.html', context)
