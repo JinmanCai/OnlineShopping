@@ -138,7 +138,7 @@ h1,h2,h3,h4,h5,h6{
 	float: none;
 	position: absolute;
 	top: 45%;
-	left: 9.5%;
+	left: 10.4%;
 	transform: translate(-50%, -50%);
   }
   
@@ -146,3 +146,11 @@ h1,h2,h3,h4,h5,h6{
 .navbar {
 	min-height: 60px;
 }
+
+.middle-searchbar{
+	float: none; 
+	position: absolute; 
+	top: 50%; 
+	left: 50%; 
+	transform: translate(-50%, -50%);
+  }

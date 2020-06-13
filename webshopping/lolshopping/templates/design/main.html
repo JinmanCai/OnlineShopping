@@ -56,6 +56,76 @@
 
               </ul>
 
+              <form class="form-inline my-2 my-lg-0 middle-searchbar" style=" background-color: white;" method="get">
+                
+                <select required style="height: 40px; width: 80px; border: none; text-align-last:center; background-color: #EFEFEF;" name="categories" id="categories">
+                  <option value="" selected>Select</option>
+                  <option value="name">Name</option>
+                  <option value="role">Role</option>
+                </select>
+
+                <input type="text" name="choices" id="choices" style="height: 40px; width: 800px; border: none;">
+
+                <script>
+                  function searchBar() {
+                    var category = document.getElementById("categories");
+                    var choice = document.getElementById("choices");
+                    if (category.value == "name") {
+                      choice.name = 'name'
+                      choice.id = 'name'
+                    } else if (category.value == "role") {
+                      choice.name = 'role'
+                      choice.id = 'role'
+                    }
+                  }
+                  </script>
+
+
+                <input type="submit" style="height: 40px; border: none;" value="Search" onclick="searchBar()">
+              </form>
+
+              <!-- <form class="form-inline my-2 my-lg-0 middle-searchbar" method="get">
+
+                <div class="container">
+                  <div class="row">   
+                    <div class="col-xs-8 col-xs-offset-2">
+                      <div class="input-group">
+                        <div class="input-group-btn search-panel">
+
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="search_concept">All</span> <span class="caret"></span>
+                          </button>
+
+                          <ul class="dropdown-menu scrollable-dropdown" role="menu">
+                            <li><a name="name" id="id_name">Name Contains</a></li>
+                            <li><a name="role" id="id_role">Role</a></li>
+                          </ul>
+
+                        </div>
+
+                        <input type="hidden" name="search_param" value="all" id="search_param">
+                        <input type="text" class="form-control" name="x" id="search" placeholder="Search">
+
+                        <span class="input-group-btn"> -->
+                          <!-- <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                          </button> -->
+                        <!-- </span>
+
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </div> -->
+
+
+
+
+
+                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+                <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+              <!-- </form> -->
+
               <!-- <h3 class = "nava">Welcome to LOL shopping</h3> -->
 
               <div class="form-inline my-2 my-lg-0">
