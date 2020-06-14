@@ -8,7 +8,10 @@
 
         <div class="col-lg-6">
             <div class="box-element-checkout" id="form-wrapper">
-				<form id="form">
+
+				<form id="form" method="POST">
+                <!-- action="/addUserInfoForm/"> -->
+                    {% csrf_token %}
                  <!-- action = "{% url 'confirmation' %}" method = "get"> -->
 
 					<div id="user-info">

@@ -67,12 +67,12 @@
                 <h6>{{champs.name}}</h6>
                 <h6>{{champs.role}}</h6>
                 <hr>
-                <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" onclick="myFun()">Add to Cart</button>
                 <h4 style="float: right">${{champs.price}}</h4>
 
             </div>
         </div>
         {% endfor %}
     </div>
-
+<script> function myFun(){alert("item had successfully added to cart");}</script>
 {% endblock content %}
