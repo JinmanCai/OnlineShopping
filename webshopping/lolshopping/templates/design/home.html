@@ -10,7 +10,7 @@
     </form> -->
     <br>
     <form method="get">
-        <label for="id_name"><b>Name contains:</b></label>&thinsp;&thinsp;&thinsp;<input type="text" name="name" id="id_name"> &ensp;
+        <!-- <label for="id_name"><b>Name contains:</b></label>&thinsp;&thinsp;&thinsp;<input type="text" name="name" id="id_name"> &ensp;
 
         <style>
             select {
@@ -25,9 +25,9 @@
         </style>
 
         <label for="id_role">
-            <b>Role:</b> &thinsp;
+            <b>Role:</b> &thinsp; -->
             <!-- <input list="id_role" name="role"> -->
-        </label>
+        <!-- </label>
         <select name="role" id="id_role">
             <option value="" selected></option>
             <option value="Top">Top</option>
@@ -36,27 +36,37 @@
             <option value="Bottom">Bottom</option>
             <option value="Support">Support</option>
         </select>
-        &ensp;
+        &ensp; -->
+        <style>
+            select{
+                position: absolute;
+                top: 80px;
+                right:10px;
+            }
+        </style>
 
         <label for="id_price">
-            <b>Price:</b> &thinsp;
+            <!-- <b>Price:</b> &thinsp; -->
         </label>
-        <select name="price" id="id_price">
-            <option value="" selected></option>
+        <select name="price" id="id_price" onchange='this.form.submit()'>
+            <option value="" selected>Sorted By:</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option>
             <option value="25">25</option>
+            <option value="LTH">Low to High</option>
+            <option value="HTL">High to Low</option>
+
         </select>
         &ensp;
 
         <!-- <label for="id_price"><b>Price:</b></label>&thinsp;&thinsp;&thinsp;<input type="number" name="price" step="any" id="id_price">&ensp; -->
 
-        &ensp;&ensp;<input type="submit" value="Search">
+        &ensp;&ensp;<noscript><input type="submit" value="Search"></noscript>
 
     </form>
-    <br>
+
 </div>
 
     <div class="row">

@@ -22,12 +22,19 @@ def home(request):
 
 
     champ = Champions.objects.all().order_by('name')
+    if request.GET.get('price') == 'LTH':
+        champ = Champions.objects.all().order_by('price','name')
+    elif request.GET.get('price') == 'HTL':
+        champ = Champions.objects.all().order_by('-price','name')
 
     myFilter = ChampionsFilter(request.GET, queryset=champ)
 
     champ = myFilter.qs
 
-    context = {'all':champ, 'myFilter':myFilter,'cartItems':cartItems}
+
+
+
+    context = {'all':champ, 'myFilter':myFilter,'cartItems':cartItems,}
     return render(request,'design/home.html',context)
 # Create your views here.
 
