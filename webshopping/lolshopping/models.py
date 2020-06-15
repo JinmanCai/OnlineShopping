@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Champions(models.Model):
 
@@ -54,4 +55,20 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+class UserInfo(models.Model):
+    uName = models.CharField(max_length=50)
+    uEmail = models.CharField(max_length=50)
+    uPhone = models.CharField(max_length=50)
+    uAddress1 = models.CharField(max_length=50)
+    uAddress2 = models.CharField(max_length=50)
+    uCity = models.CharField(max_length=50)
+    uState = models.CharField(max_length=50)
+    uZip = models.CharField(max_length=50)
+    uCardType = models.CharField(max_length=50)
+    uNameOnCard = models.CharField(max_length=50)
+    uCardNumber = models.CharField(max_length=50)
+    uExpiration_date = models.CharField(max_length=50)
+    uCvc_number = models.CharField(max_length=50)
+    uDelivery_option = models.CharField(max_length=50)
 
