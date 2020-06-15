@@ -48,20 +48,20 @@ h1,h2,h3,h4,h5,h6{
 }
 
 #cart-icon{
-	width:25px;
+	width:70px;
 	display: inline-block;
-	margin-left: 15px;
+	margin-left: 5px;
 }
 
 #cart-total{
 	display: block;
 	text-align: center;
 	color:#fff;
-	background-color: red;
-	width: 20px;
-	height: 25px;
+	background-color: #343A40!important;
+	width: 23px;
+	height: 28px;
 	border-radius: 50%;
-	font-size: 14px;
+	font-size: 19px;
 }
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
@@ -137,8 +137,20 @@ h1,h2,h3,h4,h5,h6{
 .topnav-centered{
 	float: none;
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	top: 45%;
+	left: 10.4%;
 	transform: translate(-50%, -50%);
   }
   
+
+.navbar {
+	min-height: 60px;
+}
+
+.middle-searchbar{
+	float: none; 
+	position: absolute; 
+	top: 50%; 
+	left: 50%; 
+	transform: translate(-50%, -50%);
+  }

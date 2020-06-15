@@ -8,10 +8,14 @@
 
         <div class="col-lg-6">
             <div class="box-element-checkout" id="form-wrapper">
+<!-- <<<<<<< final_branch -->
 
-				<form id="form" action = "{% url 'confirmation' %}" method = "get">
+<!-- 				<form id="form" action = "{% url 'confirmation' %}" method = "get"> -->
                 <!-- action="/addUserInfoForm/"> -->
                     <!-- {% csrf_token %} -->
+<!-- ======= -->
+				<form id="form" action = "{% url 'confirmation' %}" method = "get">
+<!-- >>>>>>> master -->
                  <!-- action = "{% url 'confirmation' %}" method = "get"> -->
 
 					<div id="user-info">
@@ -132,9 +136,10 @@
                 {% for item in items%}
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
-					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:2"><p>{{item.product.name}} ({{item.product.role}})</p></div>
 					<div style="flex:1"><p>${{item.product.price}}</p></div>
-					<div style="flex:1"><p>x{{item.quantity}}</p></div>
+                    <div style="flex:1"><p>x{{item.quantity}}</p></div>
+                    <div style="flex:0.8"><p>${{item.get_total}}</p></div>
 				</div>
                 {% endfor %}
                 <h5>Items:   {{order.get_cart_items}}</h5>
