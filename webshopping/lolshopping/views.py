@@ -4,7 +4,13 @@ import json
 from .models import *
 from .filters import ChampionsFilter
 
+def registerUserpage(request):
+    context ={}
+    return render(request,'design/registerUser.html',context)
 
+def loginPage(request):
+    context ={}
+    return render(request,'design/login.html',context)
 
 
 
