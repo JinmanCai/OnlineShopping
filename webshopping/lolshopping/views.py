@@ -22,13 +22,18 @@ def home(request):
 
 
     champ = Champions.objects.all().order_by('name')
+    myFilter = ChampionsFilter(request.GET, queryset=champ)
     if request.GET.get('price') == 'LTH':
         champ = Champions.objects.all().order_by('price','name')
+        # myFilter = ChampionsFilter(request.GET, queryset=champ)
+        # champ = myFilter.qs
+
     elif request.GET.get('price') == 'HTL':
         champ = Champions.objects.all().order_by('-price','name')
+        # myFilter = ChampionsFilter(request.GET, queryset=champ)
+        # champ = myFilter.qs
 
     myFilter = ChampionsFilter(request.GET, queryset=champ)
-
     champ = myFilter.qs
 
 
