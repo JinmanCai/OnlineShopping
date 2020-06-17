@@ -211,4 +211,12 @@ h1,h2,h3,h4,h5,h6{
 	border-bottom-left-radius: 3px;
     transition: none;
 }
-
+select {
+    width: 181px;
+    height: 28.4px;
+    vertical-align: top;
+    -ms-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
+}

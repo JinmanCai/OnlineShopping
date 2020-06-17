@@ -7,18 +7,6 @@
     <br>
     <form method="get">
 
-        <style>
-            select {
-                width: 181px;
-                height: 28.4px;
-                vertical-align: top;
-                -ms-box-sizing:content-box;
-                -moz-box-sizing:content-box;
-                -webkit-box-sizing:content-box;
-                box-sizing:content-box;
-            }
-        </style>
-
         <select class="sort-by" name="price" id="id_price" onchange='sort_filter()'>
             <option value="" selected>Sorted By:</option>
             <option value="5">5</option>
@@ -32,7 +20,6 @@
 
         <script>
             function sort_filter() {
-               
                 var prices = document.getElementById("id_price").value;
                 var current_parameter = location.search.substring(1);
                 var url = window.location.href;
@@ -40,7 +27,7 @@
 
                 if (current_parameter == ''){
                     window.location.search += '?price='+prices;
-                } else if(search_params.has('price')){
+                } else if(search_params.has('price') && !(search_params.has('categories'))){
                     window.location.search = '?price='+prices;
                 } else if(!(search_params.has('price'))){
                     window.location.search += '&price='+prices;
