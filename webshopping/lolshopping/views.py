@@ -1,18 +1,76 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 from .models import *
+from .forms import RegistrationForm, AccountAuthenticationForm
+from django.contrib.auth import login, authenticate, logout
 from .filters import ChampionsFilter
+def test(request):
+    context = {}
+    if request.POST:
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password1')
+            account = authenticate(email=email, password=raw_password)
+            login(request, account)
+            return redirect('home')
+        else:
+            context['registration_form'] = form
+    else: #GET request
+        form = RegistrationForm()
+        context['registration_form'] = form
+    return render(request, 'design/test.html', context)
 
 def registerUserpage(request):
-    context ={}
+    form = RegistrationForm()
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            account = authenticate(email=email, password=raw_password)
+
+            Customer.objects.create(
+                user=user,
+                name=user.username
+                )
+            login(request, account)
+            return redirect('home')
+
+    context ={'form':form}
     return render(request,'design/registerUser.html',context)
 
-def loginPage(request):
-    context ={}
-    return render(request,'design/login.html',context)
+def LoginPage(request):
 
 
+    user = request.user
+    if user.is_authenticated:
+        return redirect("home")
+
+    if request.POST:
+        form = AccountAuthenticationForm(request.POST)
+        if form.is_valid():
+                email = request.POST['email']
+                password = request.POST['password']
+                user = authenticate(email=email, password=password)
+
+                if user:
+                    login(request, user)
+                    return redirect("home")
+
+    else:
+        form = AccountAuthenticationForm()
+
+    context={'form':form}
+    return render(request, 'design/login.html', context)
+
+def LogoutPage(request):
+    logout(request)
+    return redirect('home')
 
 def home(request):
 
@@ -21,7 +79,9 @@ def home(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+
     else:
+
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
         cartItems = order['get_cart_items']
@@ -41,9 +101,6 @@ def home(request):
 
     myFilter = ChampionsFilter(request.GET, queryset=champ)
     champ = myFilter.qs
-
-
-
 
     context = {'all':champ, 'myFilter':myFilter,'cartItems':cartItems,}
     return render(request,'design/home.html',context)
