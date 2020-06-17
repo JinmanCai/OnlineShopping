@@ -4,13 +4,8 @@
 <title>Home</title>
 
 <div class="filt">
-    <!-- <form method ="get">
-        {{myFilter.form}}
-        <input type="submit" Value = "Search">
-    </form> -->
     <br>
     <form method="get">
-        <!-- <label for="id_name"><b>Name contains:</b></label>&thinsp;&thinsp;&thinsp;<input type="text" name="name" id="id_name"> &ensp;
 
         <style>
             select {
@@ -24,31 +19,7 @@
             }
         </style>
 
-        <label for="id_role">
-            <b>Role:</b> &thinsp; -->
-            <!-- <input list="id_role" name="role"> -->
-        <!-- </label>
-        <select name="role" id="id_role">
-            <option value="" selected></option>
-            <option value="Top">Top</option>
-            <option value="Jungle">Jungle</option>
-            <option value="Middle">Middle</option>
-            <option value="Bottom">Bottom</option>
-            <option value="Support">Support</option>
-        </select>
-        &ensp; -->
-        <style>
-            select{
-                position: absolute;
-                top: 80px;
-                right:10px;
-            }
-        </style>
-
-        <label for="id_price">
-            <!-- <b>Price:</b> &thinsp; -->
-        </label>
-        <select name="price" id="id_price" onchange='this.form.submit()'>
+        <select class="sort-by" name="price" id="id_price" onchange='sort_filter()'>
             <option value="" selected>Sorted By:</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -57,13 +28,28 @@
             <option value="25">25</option>
             <option value="LTH">Low to High</option>
             <option value="HTL">High to Low</option>
-
         </select>
-        &ensp;
 
-        <!-- <label for="id_price"><b>Price:</b></label>&thinsp;&thinsp;&thinsp;<input type="number" name="price" step="any" id="id_price">&ensp; -->
+        <script>
+            function sort_filter() {
+               
+                var prices = document.getElementById("id_price").value;
+                var current_parameter = location.search.substring(1);
+                var url = window.location.href;
+                var search_params = new URLSearchParams(current_parameter);
 
-        &ensp;&ensp;<noscript><input type="submit" value="Search"></noscript>
+                if (current_parameter == ''){
+                    window.location.search += '?price='+prices;
+                } else if(search_params.has('price')){
+                    window.location.search = '?price='+prices;
+                } else if(!(search_params.has('price'))){
+                    window.location.search += '&price='+prices;
+                } else{
+                    cat = search_params.get('categories')
+                    window.location.search = '?categories='+cat+'&'+cat+'='+search_params.get(cat)+'&price='+prices;
+                }
+            }
+        </script>
 
     </form>
 
