@@ -42,6 +42,9 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    hash_value = models.CharField(max_length = 100, null=True)
+    salt = models.CharField(max_length = 100, null=True)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

@@ -5,6 +5,10 @@ from .models import *
 from .forms import RegistrationForm, AccountAuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from .filters import ChampionsFilter
+import psycopg2
+import hashlib
+import os
+
 def test(request):
     context = {}
     if request.POST:
@@ -32,13 +36,46 @@ def registerUserpage(request):
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            account = authenticate(email=email, password=raw_password)
+            #print(raw_password) print the raw password
+            #print(type(raw_password)) print out the type, str
+            #account = authenticate(email=email, password=raw_password)
+            #print(account) #print out the email address that the user insert in 
+            #print(type(account)) print out "<class 'lolshopping.models.Account'>"
+
+            try:
+                connection = psycopg2.connect(user="JinZhi123",
+                                        password="QWER123456789",
+                                        host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
+                                        port="5432",
+                                        database="shoppingWebDatabase")
+                cursor = connection.cursor()
+
+                salt = os.urandom(32)
+                # print(salt)
+                hash_value = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), salt, 100000)
+                #print(hash_value)
+                sql_update_query = """Update lolshopping_account set salt = %s, hash_value = %s where username = %s"""
+                cursor.execute(sql_update_query, (salt, hash_value, username)) #store the hash and salt in to the DB
+                connection.commit()
+
+            except (Exception, psycopg2.Error) as error:
+                print("Error in update operation", error)
+
+            finally:
+                # closing database connection.
+                if (connection):
+                    cursor.close()
+                    connection.close()
+                    print("PostgreSQL connection is closed")
 
             Customer.objects.create(
                 user=user,
                 name=user.username
                 )
-            login(request, account)
+
+
+
+            login(request, account)  #log the user in
             return redirect('home')
 
     context ={'form':form}
@@ -55,8 +92,11 @@ def LoginPage(request):
         form = AccountAuthenticationForm(request.POST)
         if form.is_valid():
                 email = request.POST['email']
+                #print(email)
                 password = request.POST['password']
+                #print(password)
                 user = authenticate(email=email, password=password)
+                #print(user)
 
                 if user:
                     login(request, user)
