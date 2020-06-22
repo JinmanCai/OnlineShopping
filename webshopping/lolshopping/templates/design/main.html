@@ -35,20 +35,13 @@
 
      <body>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343A40;">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <div class="topnav-centered">
-              <a class="navbar-brand mb-0 h1" style="font-size: 28.7px; " href="{% url 'home' %}" >
-                LOL shopping
-              </a>
-            </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
+              <ul class="navbar-nav">
 
                 <!-- <li class="nav-item active">
                   <a class="nav-link" href="{% url 'cart' %}">Cart <span class="sr-only">(current)</span></a>
@@ -56,79 +49,76 @@
 
               </ul>
 
-              <form class="form-inline my-2 my-lg-0 middle-searchbar" style=" background-color: white;" method="get">
-                
-                <select required style="height: 40px; width: 80px; border: none; text-align-last:center; background-color: #EFEFEF;" name="categories" id="categories">
-                  <option value="" selected>Select</option>
-                  <option value="name">Name</option>
-                  <option value="role">Role</option>
-                </select>
+              <form class="form-inline my-2 my-lg-0 middle-searchbar" method="get">
 
-                <input type="text" name="choices" id="choices" style="height: 40px; width: 800px; border: none;">
+                <div class="topnav-centered">
+                  <a class="navbar-brand mb-0 h1" style="margin-left: 98px; margin-right: 40px; font-size: 28.7px;" href="{% url 'home' %}" >
+                    Welcome to LOL shopping
+                  </a>
+                </div>
 
-                <script>
-                  function searchBar() {
-                    var category = document.getElementById("categories");
-                    var choice = document.getElementById("choices");
-                    if (category.value == "name") {
-                      choice.name = 'name'
-                      choice.id = 'name'
-                    } else if (category.value == "role") {
-                      choice.name = 'role'
-                      choice.id = 'role'
+                <div class="middle-searchbar player-search">
+
+                  <div class="dropdown">
+                    <!-- style="height: 40px; width: 80px; border: none; text-align-last:center; background-color: #EFEFEF;" -->
+                    <select required class="dropdown-toggle" name="categories" id="categories">
+                      <option value="" selected>Select</option>
+                      <option value="name">Name</option>
+                      <option value="role">Role</option>
+                    </select>
+                  </div>
+
+                  <!-- height: 40px; width: 800px; -->
+                  <input class="searchbar-input" type="text" name="choices" id="choices">
+
+
+
+                  <script>
+                    function searchBar() {
+                      var category = document.getElementById("categories");
+                      var choice = document.getElementById("choices");
+                      if (category.value == "name") {
+                        choice.name = 'name'
+                        choice.id = 'name'
+                      } else if (category.value == "role") {
+                        choice.name = 'role'
+                        choice.id = 'role'
+                      }
                     }
-                  }
-                  </script>
+                    </script>
 
 
-                <input type="submit" style="height: 40px; border: none;" value="Search" onclick="searchBar()">
+                  <input type="submit" style="width:65px; height: 40px; border: none; border-top-right-radius: 3px; border-bottom-right-radius: 3px; flex-grow: 1;" value="Search" onclick="searchBar()">
+                </div>
+
               </form>
 
-              <!-- <form class="form-inline my-2 my-lg-0 middle-searchbar" method="get">
 
-                <div class="container">
-                  <div class="row">   
-                    <div class="col-xs-8 col-xs-offset-2">
-                      <div class="input-group">
-                        <div class="input-group-btn search-panel">
+              <div class="form-inline my-2 my-lg-0 flex-grow: 1;">
 
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="search_concept">All</span> <span class="caret"></span>
-                          </button>
+                  <div class="dropdown_2">
+                    <button class="dropbtn">
 
-                          <ul class="dropdown-menu scrollable-dropdown" role="menu">
-                            <li><a name="name" id="id_name">Name Contains</a></li>
-                            <li><a name="role" id="id_role">Role</a></li>
-                          </ul>
+                      {% if request.user.is_authenticated %}
 
-                        </div>
+                      <a href="#">Hello, {{request.user.username}}</a>
 
-                        <input type="hidden" name="search_param" value="all" id="search_param">
-                        <input type="text" class="form-control" name="x" id="search" placeholder="Search">
+                      {% else %}
 
-                        <span class="input-group-btn"> -->
-                          <!-- <button class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-search"></span>
-                          </button> -->
-                        <!-- </span>
+                      <a href="{% url 'LoginPage' %}">Sign In</a>
 
-                      </div>
+                      {% endif %}
+
+                    </button>
+                    <div class="dropdown-content">
+                      <a href="#">Your Account</a>
+
+                      {% if request.user.is_authenticated %}
+                      <a href="{% url 'LogoutPage' %}">Sign Out</a>
+                      {% endif %}
+
                     </div>
                   </div>
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </div> -->
-
-
-
-
-
-                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-                <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-              <!-- </form> -->
-
-              <!-- <h3 class = "nava">Welcome to LOL shopping</h3> -->
-
-              <div class="form-inline my-2 my-lg-0">
 
                   <a href="{% url 'cart' %}">
                       <img  id="cart-icon" src="{% static 'images/cart_icon.png' %}">
@@ -143,7 +133,6 @@
 
             </div>
 
-          </div>
 
         </nav>
 

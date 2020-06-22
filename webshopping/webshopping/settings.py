@@ -69,7 +69,10 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'lolshopping.Account'
+
 WSGI_APPLICATION = 'webshopping.wsgi.application'
+
 
 
 # Database
