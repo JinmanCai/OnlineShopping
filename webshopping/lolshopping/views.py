@@ -39,8 +39,9 @@ def registerUserpage(request):
             #print(raw_password) print the raw password
             #print(type(raw_password)) print out the type, str
             #account = authenticate(email=email, password=raw_password)
+            #print(type(user)) #print out "<class 'lolshopping.models.Account'>"
             #print(account) #print out the email address that the user insert in 
-            #print(type(account)) print out "<class 'lolshopping.models.Account'>"
+            #print(type(account)) #print out "<class 'lolshopping.models.Account'>"
 
             try:
                 connection = psycopg2.connect(user="JinZhi123",
@@ -74,8 +75,7 @@ def registerUserpage(request):
                 )
 
 
-
-            login(request, account)  #log the user in
+            login(request, user)  #log the user in
             return redirect('home')
 
     context ={'form':form}
