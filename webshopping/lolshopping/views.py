@@ -8,6 +8,8 @@ from .filters import ChampionsFilter
 import psycopg2
 import hashlib
 import os
+from django.contrib.auth import get_user_model
+UserModel = get_user_model()
 
 
 def test(request):
@@ -43,6 +45,7 @@ def registerUserpage(request):
             #print(type(user)) #print out "<class 'lolshopping.models.Account'>"
             #print(account) #print out the email address that the user insert in 
             #print(type(account)) #print out "<class 'lolshopping.models.Account'>"
+            user_from_usermodel = UserModel._default_manager.get_by_natural_key(email)
 
             try:
                 connection = psycopg2.connect(user="JinZhi123",
@@ -76,7 +79,7 @@ def registerUserpage(request):
                 )
 
 
-            login(request, user)  #log the user in
+            login(request, user_from_usermodel)  #log the user in
             return redirect('home')
 
     context ={'form':form}
@@ -93,7 +96,8 @@ def LoginPage(request):
         if form.is_valid():
                 email = request.POST['email']
                 password = request.POST['password']
-                user = authenticate(email=email, password=password)
+                user = UserModel._default_manager.get_by_natural_key(email)
+                #user = authenticate(email=email, password=password)
                 #print(user)
                 
                 try:
@@ -130,10 +134,6 @@ def LoginPage(request):
                     print('hello, logged in')
                     login(request, user)
                     return redirect("home")
-
-                # if user:
-                #     login(request, user)
-                #     return redirect("home")
 
     else:
         form = AccountAuthenticationForm()
