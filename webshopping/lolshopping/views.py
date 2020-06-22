@@ -9,6 +9,7 @@ import psycopg2
 import hashlib
 import os
 
+
 def test(request):
     context = {}
     if request.POST:
@@ -56,7 +57,7 @@ def registerUserpage(request):
                 hash_value = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), salt, 100000)
                 #print(hash_value)
                 sql_update_query = """Update lolshopping_account set salt = %s, hash_value = %s where username = %s"""
-                cursor.execute(sql_update_query, (salt, hash_value, username)) #store the hash and salt in to the DB
+                cursor.execute(sql_update_query, (salt.decode('latin-1'), hash_value.hex(), username)) #store the hash and salt in to the DB
                 connection.commit()
 
             except (Exception, psycopg2.Error) as error:
@@ -83,7 +84,6 @@ def registerUserpage(request):
 
 def LoginPage(request):
 
-
     user = request.user
     if user.is_authenticated:
         return redirect("home")
@@ -92,15 +92,48 @@ def LoginPage(request):
         form = AccountAuthenticationForm(request.POST)
         if form.is_valid():
                 email = request.POST['email']
-                #print(email)
                 password = request.POST['password']
-                #print(password)
                 user = authenticate(email=email, password=password)
                 #print(user)
+                
+                try:
+                    connection = psycopg2.connect(user="JinZhi123",
+                                            password="QWER123456789",
+                                            host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
+                                            port="5432",
+                                            database="shoppingWebDatabase")
+                    cursor = connection.cursor()
 
-                if user:
+                    sql_select_query = """select * from lolshopping_account where email = %s"""
+                    cursor.execute(sql_select_query, (email, ))
+                    record = cursor.fetchone()
+                    #print(record[10]) #str hash value from the DB
+                    #print(record[11]) #str salt from the DB 
+
+                except (Exception, psycopg2.Error) as error:
+                    print("Error in update operation", error)
+
+                finally:
+                    # closing database connection.
+                    if (connection):
+                        cursor.close()
+                        connection.close()
+                        print("PostgreSQL connection is closed")
+
+                hash_value_from_DB = record[10]
+                salt_from_DB = record[11].encode('latin-1')
+                hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), salt_from_DB, 100000) #output hash value
+                hash_value = hash_value.hex()
+                
+                
+                if hash_value == hash_value_from_DB:
+                    print('hello, logged in')
                     login(request, user)
                     return redirect("home")
+
+                # if user:
+                #     login(request, user)
+                #     return redirect("home")
 
     else:
         form = AccountAuthenticationForm()
