@@ -52,9 +52,10 @@
         <div class="col-lg-3 abc">
             <img class ="thumbnail" src="{{champs.imageURL}}">
             <div class="box-element product">
-                <div class="namez">
-                <h6>{{champs.name}}</h6></div>
-                <h6>{{champs.role}}</h6>
+            <span class="namez">
+                <h6>{{champs.name}}</h6></span>
+            <span class= "rolez">
+                <h6>{{champs.role}}</h6></span>
                 <hr>
                 <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" onclick="myFun()">Add to Cart</button>
                 <h4 style="float: right">${{champs.price}}</h4>

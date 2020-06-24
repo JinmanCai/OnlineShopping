@@ -138,29 +138,37 @@
             $("#choices").keyup(function() {
 
               // Retrieve the input field text and reset the count to zero
-              var filter = $(this).val(), count = 0;
+              var query = $(this).val().toLowerCase();
               var category = document.getElementById("categories");
               var choice = document.getElementById("choices");
 
 
               // Loop through the comment list
-              if (category.value == "name" || category.value == "role" ){
+              if (category.value == "name"){
 
-              $('#results div').each(function() {
+              $('div.abc .namez').each(function() {
+
+                var $this = $(this);
+                if($(this).text().toLowerCase().indexOf(query) === -1)
+                    $(this).closest('div.abc').hide();
+                else $(this).closest('div.abc').show();
 
 
-                // If the list item does not contain the text phrase fade it out
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                  $(this).hide();  // MY CHANGE
 
-                  // Show the list item if the phrase matches and increase the count by 1
-                } else {
-                  $(this).show(); // MY CHANGE
-                  count++;
-                }
 
               });
             }
+            else if (category.value == "role") {
+            $('div.abc .rolez').each(function() {
+
+                var $this = $(this);
+                if($(this).text().toLowerCase().indexOf(query) === -1)
+                    $(this).closest('div.abc').hide();
+                else $(this).closest('div.abc').show();
+
+
+            });
+          }
             });
 
             </script>
