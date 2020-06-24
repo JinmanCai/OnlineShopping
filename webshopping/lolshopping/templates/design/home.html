@@ -6,6 +6,7 @@
 
     <p>Hello, {{request.user.username}}</p>
     {% endif %} -->
+
 <div class="filt">
     <br>
     <form method="get">
@@ -45,12 +46,14 @@
 
 </div>
 
-    <div class="row">
+    <div class="row" id="results">
+
         {% for champs in all %}
         <div class="col-lg-3 abc">
             <img class ="thumbnail" src="{{champs.imageURL}}">
             <div class="box-element product">
-                <h6>{{champs.name}}</h6>
+                <div class="namez">
+                <h6>{{champs.name}}</h6></div>
                 <h6>{{champs.role}}</h6>
                 <hr>
                 <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" onclick="myFun()">Add to Cart</button>
@@ -59,6 +62,7 @@
             </div>
         </div>
         {% endfor %}
+
     </div>
 <script> function myFun(){alert("item had successfully added to cart");}</script>
 {% endblock content %}
