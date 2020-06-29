@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import os
-import hashlib
+
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -67,7 +67,7 @@ class Account(AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         try:
-            self.new_salt = os.urandom(32)
+            self.new_salt = os.urandom(10)
             super().save(*args, **kwargs)
         except IntegrityError:
             self.save(*args, **kwargs)
@@ -128,3 +128,4 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+

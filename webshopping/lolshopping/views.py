@@ -43,9 +43,17 @@ def registerUserpage(request):
             #print(type(raw_password)) print out the type, str
             #account = authenticate(email=email, password=raw_password)
             #print(type(user)) #print out "<class 'lolshopping.models.Account'>"
-            #print(account) #print out the email address that the user insert in 
+            #print(account) #print out the email address that the user insert in
             #print(type(account)) #print out "<class 'lolshopping.models.Account'>"
+
             user_from_usermodel = UserModel._default_manager.get_by_natural_key(email)
+            # print(user_from_usermodel.new_salt) get the salt from db
+
+            h = Account.objects.get(id = user_from_usermodel.id )
+            new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(user_from_usermodel.new_salt), 100000)
+            h.new_hash_value = new_hash_val
+            h.save()
+
 
             try:
                 connection = psycopg2.connect(user="JinZhi123",
@@ -99,7 +107,7 @@ def LoginPage(request):
                 user = UserModel._default_manager.get_by_natural_key(email)
                 #user = authenticate(email=email, password=password)
                 #print(user)
-                
+
                 try:
                     connection = psycopg2.connect(user="JinZhi123",
                                             password="QWER123456789",
@@ -112,7 +120,7 @@ def LoginPage(request):
                     cursor.execute(sql_select_query, (email, ))
                     record = cursor.fetchone()
                     #print(record[10]) #str hash value from the DB
-                    #print(record[11]) #str salt from the DB 
+                    #print(record[11]) #str salt from the DB
 
                 except (Exception, psycopg2.Error) as error:
                     print("Error in update operation", error)
@@ -128,8 +136,8 @@ def LoginPage(request):
                 salt_from_DB = record[11].encode('latin-1')
                 hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), salt_from_DB, 100000) #output hash value
                 hash_value = hash_value.hex()
-                
-                
+
+
                 if hash_value == hash_value_from_DB:
                     print('hello, logged in')
                     login(request, user)
