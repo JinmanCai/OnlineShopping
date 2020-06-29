@@ -137,16 +137,16 @@
 
             $("#choices").keyup(function() {
 
-              // Retrieve the input field text and reset the count to zero
+
               var query = $(this).val().toLowerCase();
               var category = document.getElementById("categories");
               var choice = document.getElementById("choices");
 
 
-              // Loop through the comment list
+
               if (category.value == "name"){
 
-              $('div.abc .namez').each(function() {
+              $('div.abc .class_name').each(function() {
 
                 var $this = $(this);
                 if($(this).text().toLowerCase().indexOf(query) === -1)
@@ -159,7 +159,7 @@
               });
             }
             else if (category.value == "role") {
-            $('div.abc .rolez').each(function() {
+            $('div.abc .class_role').each(function() {
 
                 var $this = $(this);
                 if($(this).text().toLowerCase().indexOf(query) === -1)

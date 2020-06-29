@@ -27,15 +27,11 @@ def registerUserpage(request):
             user_from_usermodel = UserModel._default_manager.get_by_natural_key(email)
 
 
-            h = Account.objects.get(id = user_from_usermodel.id )
+            hash_save = Account.objects.get(id = user_from_usermodel.id )
             new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(user_from_usermodel.new_salt), 100000)
-            print(user_from_usermodel.new_salt)
-            print(str.encode(user_from_usermodel.new_salt))
+            hash_save.new_hash_value = new_hash_val.hex()
 
-
-            h.new_hash_value = new_hash_val.hex()
-
-            h.save()
+            hash_save.save()
             Customer.objects.create(
                 user=user,
                 name=user.username
@@ -63,7 +59,6 @@ def LoginPage(request):
 
 
                 hash_value_from_DB = user.new_hash_value
-
                 hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), str.encode(user.new_salt), 100000) #output hash value
                 hash_value = hash_value.hex()
 
