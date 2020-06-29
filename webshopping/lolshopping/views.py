@@ -12,23 +12,6 @@ from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 
 
-def test(request):
-    context = {}
-    if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            raw_password = form.cleaned_data.get('password1')
-            account = authenticate(email=email, password=raw_password)
-            login(request, account)
-            return redirect('home')
-        else:
-            context['registration_form'] = form
-    else: #GET request
-        form = RegistrationForm()
-        context['registration_form'] = form
-    return render(request, 'design/test.html', context)
 
 def registerUserpage(request):
     form = RegistrationForm()
@@ -39,15 +22,10 @@ def registerUserpage(request):
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            #print(raw_password) print the raw password
-            #print(type(raw_password)) print out the type, str
-            #account = authenticate(email=email, password=raw_password)
-            #print(type(user)) #print out "<class 'lolshopping.models.Account'>"
-            #print(account) #print out the email address that the user insert in
-            #print(type(account)) #print out "<class 'lolshopping.models.Account'>"
+
 
             user_from_usermodel = UserModel._default_manager.get_by_natural_key(email)
-            # print(user_from_usermodel.new_salt) get the salt from db
+
 
             h = Account.objects.get(id = user_from_usermodel.id )
             new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(user_from_usermodel.new_salt), 100000)
@@ -58,34 +36,6 @@ def registerUserpage(request):
             h.new_hash_value = new_hash_val.hex()
 
             h.save()
-
-
-            # try:
-            #     connection = psycopg2.connect(user="JinZhi123",
-            #                             password="QWER123456789",
-            #                             host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
-            #                             port="5432",
-            #                             database="shoppingWebDatabase")
-            #     cursor = connection.cursor()
-
-            #     salt = os.urandom(32)
-            #     # print(salt)
-            #     hash_value = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), salt, 100000)
-            #     #print(hash_value)
-            #     sql_update_query = """Update lolshopping_account set salt = %s, hash_value = %s where username = %s"""
-            #     cursor.execute(sql_update_query, (salt.decode('latin-1'), hash_value.hex(), username)) #store the hash and salt in to the DB
-            #     connection.commit()
-
-            # except (Exception, psycopg2.Error) as error:
-            #     print("Error in update operation", error)
-
-            # finally:
-            #     # closing database connection.
-            #     if (connection):
-            #         cursor.close()
-            #         connection.close()
-            #         print("PostgreSQL connection is closed")
-
             Customer.objects.create(
                 user=user,
                 name=user.username
@@ -110,45 +60,17 @@ def LoginPage(request):
                 email = request.POST['email']
                 password = request.POST['password']
                 user = UserModel._default_manager.get_by_natural_key(email)
-                #user = authenticate(email=email, password=password)
-                #print(user)
 
-                # try:
-                #     connection = psycopg2.connect(user="JinZhi123",
-                #                             password="QWER123456789",
-                #                             host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
-                #                             port="5432",
-                #                             database="shoppingWebDatabase")
-                #     cursor = connection.cursor()
-
-                #     sql_select_query = """select * from lolshopping_account where email = %s"""
-                #     cursor.execute(sql_select_query, (email, ))
-                #     record = cursor.fetchone()
-                #     #print(record[10]) #str hash value from the DB
-                #     #print(record[11]) #str salt from the DB
-
-                # except (Exception, psycopg2.Error) as error:
-                #     print("Error in update operation", error)
-
-                # finally:
-                #     # closing database connection.
-                #     if (connection):
-                #         cursor.close()
-                #         connection.close()
-                #         print("PostgreSQL connection is closed")
 
                 hash_value_from_DB = user.new_hash_value
 
                 hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), str.encode(user.new_salt), 100000) #output hash value
                 hash_value = hash_value.hex()
-                print(hash_value)
-                print(hash_value_from_DB)
-                print(type(hash_value))
-                print(type(hash_value_from_DB))
+
 
 
                 if hash_value == hash_value_from_DB:
-                    print('hello, logged in')
+
                     login(request, user)
                     return redirect("home")
 
