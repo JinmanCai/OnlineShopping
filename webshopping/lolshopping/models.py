@@ -48,7 +48,7 @@ class Account(AbstractBaseUser):
     hash_value = models.CharField(max_length = 100, null=True)
     salt = models.CharField(max_length = 100, null=True)
     new_salt = models.CharField(max_length = 100, null=True)
-    new_hash_value = models.CharField(max_length = 100, null=True)
+    new_hash_value = models.CharField(max_length = 200, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -65,12 +65,12 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_lable):
         return True
 
-    def save(self, *args, **kwargs):
-        try:
-            self.new_salt = os.urandom(10)
-            super().save(*args, **kwargs)
-        except IntegrityError:
-            self.save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         self.new_salt = os.urandom(5)
+    #         super().save(*args, **kwargs)
+    #     except IntegrityError:
+    #         self.save(*args, **kwargs)
 
 
 

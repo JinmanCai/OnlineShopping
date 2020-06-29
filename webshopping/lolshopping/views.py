@@ -51,35 +51,40 @@ def registerUserpage(request):
 
             h = Account.objects.get(id = user_from_usermodel.id )
             new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(user_from_usermodel.new_salt), 100000)
-            h.new_hash_value = new_hash_val
+            print(user_from_usermodel.new_salt)
+            print(str.encode(user_from_usermodel.new_salt))
+
+
+            h.new_hash_value = new_hash_val.hex()
+
             h.save()
 
 
-            try:
-                connection = psycopg2.connect(user="JinZhi123",
-                                        password="QWER123456789",
-                                        host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
-                                        port="5432",
-                                        database="shoppingWebDatabase")
-                cursor = connection.cursor()
+            # try:
+            #     connection = psycopg2.connect(user="JinZhi123",
+            #                             password="QWER123456789",
+            #                             host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
+            #                             port="5432",
+            #                             database="shoppingWebDatabase")
+            #     cursor = connection.cursor()
 
-                salt = os.urandom(32)
-                # print(salt)
-                hash_value = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), salt, 100000)
-                #print(hash_value)
-                sql_update_query = """Update lolshopping_account set salt = %s, hash_value = %s where username = %s"""
-                cursor.execute(sql_update_query, (salt.decode('latin-1'), hash_value.hex(), username)) #store the hash and salt in to the DB
-                connection.commit()
+            #     salt = os.urandom(32)
+            #     # print(salt)
+            #     hash_value = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), salt, 100000)
+            #     #print(hash_value)
+            #     sql_update_query = """Update lolshopping_account set salt = %s, hash_value = %s where username = %s"""
+            #     cursor.execute(sql_update_query, (salt.decode('latin-1'), hash_value.hex(), username)) #store the hash and salt in to the DB
+            #     connection.commit()
 
-            except (Exception, psycopg2.Error) as error:
-                print("Error in update operation", error)
+            # except (Exception, psycopg2.Error) as error:
+            #     print("Error in update operation", error)
 
-            finally:
-                # closing database connection.
-                if (connection):
-                    cursor.close()
-                    connection.close()
-                    print("PostgreSQL connection is closed")
+            # finally:
+            #     # closing database connection.
+            #     if (connection):
+            #         cursor.close()
+            #         connection.close()
+            #         print("PostgreSQL connection is closed")
 
             Customer.objects.create(
                 user=user,
@@ -108,34 +113,38 @@ def LoginPage(request):
                 #user = authenticate(email=email, password=password)
                 #print(user)
 
-                try:
-                    connection = psycopg2.connect(user="JinZhi123",
-                                            password="QWER123456789",
-                                            host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
-                                            port="5432",
-                                            database="shoppingWebDatabase")
-                    cursor = connection.cursor()
+                # try:
+                #     connection = psycopg2.connect(user="JinZhi123",
+                #                             password="QWER123456789",
+                #                             host="postgresql-database.cze0ijktxt2d.us-east-2.rds.amazonaws.com",
+                #                             port="5432",
+                #                             database="shoppingWebDatabase")
+                #     cursor = connection.cursor()
 
-                    sql_select_query = """select * from lolshopping_account where email = %s"""
-                    cursor.execute(sql_select_query, (email, ))
-                    record = cursor.fetchone()
-                    #print(record[10]) #str hash value from the DB
-                    #print(record[11]) #str salt from the DB
+                #     sql_select_query = """select * from lolshopping_account where email = %s"""
+                #     cursor.execute(sql_select_query, (email, ))
+                #     record = cursor.fetchone()
+                #     #print(record[10]) #str hash value from the DB
+                #     #print(record[11]) #str salt from the DB
 
-                except (Exception, psycopg2.Error) as error:
-                    print("Error in update operation", error)
+                # except (Exception, psycopg2.Error) as error:
+                #     print("Error in update operation", error)
 
-                finally:
-                    # closing database connection.
-                    if (connection):
-                        cursor.close()
-                        connection.close()
-                        print("PostgreSQL connection is closed")
+                # finally:
+                #     # closing database connection.
+                #     if (connection):
+                #         cursor.close()
+                #         connection.close()
+                #         print("PostgreSQL connection is closed")
 
-                hash_value_from_DB = record[10]
-                salt_from_DB = record[11].encode('latin-1')
-                hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), salt_from_DB, 100000) #output hash value
+                hash_value_from_DB = user.new_hash_value
+
+                hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), str.encode(user.new_salt), 100000) #output hash value
                 hash_value = hash_value.hex()
+                print(hash_value)
+                print(hash_value_from_DB)
+                print(type(hash_value))
+                print(type(hash_value_from_DB))
 
 
                 if hash_value == hash_value_from_DB:

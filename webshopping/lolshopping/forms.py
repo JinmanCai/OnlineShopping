@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
+import os
 
 from .models import Account
 
@@ -10,6 +11,13 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = Account
         fields = ("email", "username", "password1", "password2")
+
+    def save(self, commit=True):
+        instance = super(RegistrationForm,self).save(commit=False)
+        instance.new_salt = os.urandom(5)
+        if commit:
+            instance.save()
+        return instance
 
 class AccountAuthenticationForm(forms.ModelForm):
 
