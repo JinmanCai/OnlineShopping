@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import os
+import hashlib
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -36,7 +38,7 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name = 'email', max_length = 60, unique=True)
     username = models.CharField(max_length = 30, unique=True)
-    password = models.CharField(max_length = 225)
+
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)
@@ -45,7 +47,8 @@ class Account(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     hash_value = models.CharField(max_length = 100, null=True)
     salt = models.CharField(max_length = 100, null=True)
-
+    new_salt = models.CharField(max_length = 100, null=True)
+    new_hash_value = models.CharField(max_length = 100, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -62,6 +65,12 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_lable):
         return True
 
+    def save(self, *args, **kwargs):
+        try:
+            self.new_salt = os.urandom(32)
+            super().save(*args, **kwargs)
+        except IntegrityError:
+            self.save(*args, **kwargs)
 
 
 
