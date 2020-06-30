@@ -6,6 +6,7 @@
 
     <p>Hello, {{request.user.username}}</p>
     {% endif %} -->
+
 <div class="filt">
     <br>
     <form method="get">
@@ -45,20 +46,37 @@
 
 </div>
 
-    <div class="row">
+    <div class="row" id="results">
+
         {% for champs in all %}
-        <div class="col-lg-3 abc">
+        <div class="col-lg-3 abc" id="contain">
             <img class ="thumbnail" src="{{champs.imageURL}}">
             <div class="box-element product">
-                <h6>{{champs.name}}</h6>
-                <h6>{{champs.role}}</h6>
+            <span class="champ_name">
+                <h6>{{champs.name}}</h6></span>
+            <span class= "champ_role">
+                <h6>{{champs.role}}</h6></span>
                 <hr>
-                <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" onclick="myFun()">Add to Cart</button>
+                <button data-product="{{champs.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart buynow">Add to Cart</button>
                 <h4 style="float: right">${{champs.price}}</h4>
 
             </div>
         </div>
         {% endfor %}
+
     </div>
-<script> function myFun(){alert("item had successfully added to cart");}</script>
+<!-- <script> function myFun(){alert("item had successfully added to cart");}</script> -->
+<script>
+    $(".buynow").click(function(){
+
+        var $this = $(this);
+        $this.toggleClass('.buynow2');
+        if($this.hasClass('.buynow')){
+            $this.text('Add to Cart');
+        }else{
+            $this.text('Purchased')
+        }
+
+    });
+</script>
 {% endblock content %}
