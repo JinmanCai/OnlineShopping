@@ -45,8 +45,6 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    hash_value = models.CharField(max_length = 100, null=True)
-    salt = models.CharField(max_length = 100, null=True)
     new_salt = models.CharField(max_length = 100, null=True)
     new_hash_value = models.CharField(max_length = 200, null=True)
 
@@ -93,13 +91,13 @@ class Customer(models.Model):
     # Personal information
     full_name = models.CharField(max_length=100, null=True)
     email = models.CharField(max_length=100, null=True)
-    phone_number = models.CharField(max_length=12, null=True)
+    phone_number = models.DecimalField(decimal_places=0, max_digits=12, null=True)
     #shipping address
     address_line_1 = models.CharField(max_length=100, null=True)
     address_line_2 = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=50, null=True)
     state = models.CharField(max_length=50, null=True)
-    postal_code = models.CharField(max_length=20, null=True)
+    postal_code = models.DecimalField(decimal_places=0, max_digits=10, null=True)
 
 
     def __str__(self):
