@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 from .models import *
-from .forms import RegistrationForm, AccountAuthenticationForm
+from .forms import RegistrationForm, AccountAuthenticationForm, UserProfileForm
 from django.contrib.auth import login, authenticate, logout
 from .filters import ChampionsFilter
+from django.contrib import messages
 import psycopg2
 import hashlib
 import os
@@ -34,7 +35,8 @@ def registerUserpage(request):
             hash_save.save()
             Customer.objects.create(
                 user=user,
-                name=user.username
+                name=user.username,
+                email=user.email
                 )
 
 
@@ -74,6 +76,21 @@ def LoginPage(request):
 
     context={'form':form}
     return render(request, 'design/login.html', context)
+
+
+def userProfile(request):
+    customer = request.user.customer
+    form = UserProfileForm(instance = customer)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance = customer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('Profile')
+
+    context={'form':form}
+    return render(request,'design/userProfile.html', context)
 
 def LogoutPage(request):
     logout(request)

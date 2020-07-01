@@ -11,5 +11,6 @@ urlpatterns = [
     path('addUserInfoForm/',views.addUserInfoForm, name='addUserInfoForm'),
     path('registerUser/',views.registerUserpage, name='registerUserpage'),
     path('login/',views.LoginPage, name='LoginPage'),
+    path('profile/',views.userProfile, name='Profile'),
     path('logout/',views.LogoutPage, name='LogoutPage'),
 ]
