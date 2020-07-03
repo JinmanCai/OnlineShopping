@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.forms import ModelForm
 import os
+import hashlib
 
 from .models import Account, Customer
 
@@ -32,7 +33,14 @@ class RegistrationForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(RegistrationForm,self).save(commit=False)
-        instance.new_salt = os.urandom(5)
+        raw_password = self.cleaned_data.get('password1')
+        salt = os.urandom(5)
+        instance.new_salt = str(salt)
+        new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(instance.new_salt), 100000)
+        instance.new_hash_value = new_hash_val.hex()
+
+
+
         if commit:
             instance.save()
         return instance

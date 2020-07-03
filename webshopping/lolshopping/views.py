@@ -28,11 +28,11 @@ def registerUserpage(request):
             user_from_usermodel = UserModel._default_manager.get_by_natural_key(email)
 
 
-            hash_save = Account.objects.get(id = user_from_usermodel.id )
-            new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(user_from_usermodel.new_salt), 100000)
-            hash_save.new_hash_value = new_hash_val.hex()
+            # hash_save = Account.objects.get(id = user_from_usermodel.id )
+            # new_hash_val = hashlib.pbkdf2_hmac('sha256', raw_password.encode(), str.encode(user_from_usermodel.new_salt), 100000)
+            # hash_save.new_hash_value = new_hash_val.hex()
 
-            hash_save.save()
+            # hash_save.save()
             Customer.objects.create(
                 user=user,
                 name=user.username,
