@@ -58,14 +58,9 @@ def LoginPage(request):
                 email = request.POST['email']
                 password = request.POST['password']
                 user = UserModel._default_manager.get_by_natural_key(email)
-
-
                 hash_value_from_DB = user.new_hash_value
                 hash_value = hashlib.pbkdf2_hmac('sha256', password.encode(), str.encode(user.new_salt), 100000) #output hash value
                 hash_value = hash_value.hex()
-
-
-
                 if hash_value == hash_value_from_DB:
 
                     login(request, user)

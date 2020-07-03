@@ -7,7 +7,7 @@ import hashlib
 from .models import Account, Customer
 
 class RegistrationForm(forms.ModelForm):
-    email = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
+    email = forms.EmailField(max_length=60, help_text='Required. Add a valid email address',)
     error_messages = {
         'password_mismatch': ("The two password fields didn't match."),
     }
@@ -56,10 +56,18 @@ class AccountAuthenticationForm(forms.ModelForm):
     def clean(self):
         if self.is_valid():
             email = self.cleaned_data['email']
-            password = self.cleaned_data['password']
+            try:
+                user = Account.objects.get(email=email)
+            except Account.DoesNotExist:
+                raise forms.ValidationError("Invalid login")
+            # if not authenticate(email=email):
+            #     print(email)
+            #     raise forms.ValidationError("Invalid login")
+
 
 class UserProfileForm(ModelForm):
     address_line_2 = forms.CharField(required=False)
+
     class Meta:
         model = Customer
         fields = '__all__'
