@@ -61,7 +61,9 @@
                         </div>
 
                     </div>
-
+                    <div id = 'change-info'>
+                        <a href="{% url 'Profile' %}">change </a>
+                    </div>
                     <div id="payment-info">
 
                         <p><h4>Enter Payment Method:</h4></p>
@@ -165,11 +167,13 @@
                 console.log("hello world")
                 // window.location.href = "{% url 'confirmation' %}"
             })
-
-
-
         }
 
+
+
+        if (user =='AnonymousUser'){
+            document.getElementById('change-info').innerHTML = ''
+        }
 
 
     </script>
