@@ -1,0 +1,41 @@
+{% extends 'design/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class ="row">
+    <div class="col-md-9">
+        {% if messages %}
+            {% for message in messages %}
+            <div class = "alert alert-{{message.tags}}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        <div class="card card-body">
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><h4>Enter Personal Information:</h4></p>
+                <div>
+                    <h6>Full Name: {{form.full_name}}</h6>
+                    <h6>Phone: {{form.phone_number}}</h6>
+                </div>
+                <p><h4>Shipping Address:</h4></p>
+                <div>
+                    <h6>Address_line_1: {{form.address_line_1}}</h6>
+                    <h6>Address_line_2: {{form.address_line_2}}</h6>
+                    <h6>City: {{form.city}}</h6>
+                    <h6>State: {{form.state}}</h6>
+                    <h6>Postal Code: {{form.postal_code}}</h6>
+                </div>
+
+            <input class="btn btn-primary" type="submit" name="Update Information">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
